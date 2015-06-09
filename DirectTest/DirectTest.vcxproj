@@ -10,6 +10,15 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DxInitializer.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="WindowCreator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5E6B7B06-410B-4C3F-9B41-39E47BC65CA6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -79,15 +88,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\DxInitializer.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\source.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\Timer.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\WindowCreator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\..\..\..\Desktop\NewProject\NewProject\text.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

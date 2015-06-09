@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\DxInitializer.cpp">
+    <ClCompile Include="DxInitializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\source.cpp">
+    <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\Timer.cpp">
+    <ClCompile Include="WindowCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\NewProject\NewProject\WindowCreator.cpp">
+    <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\..\Desktop\NewProject\NewProject\text.txt">
+    <Text Include="Text.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
