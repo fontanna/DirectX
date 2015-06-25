@@ -15,7 +15,9 @@ private:
 	Timer *softTimer;
 	Timer *hardTimer;
 	int framesCount;
-
+	string softFileName = "softFilev1.txt";
+	string hardFileName = "hardFilev1.txt";
+	
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		switch (msg)
 		{
@@ -27,12 +29,12 @@ private:
 		}
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
-
+	
 	void WindowCreator::registerWindowClass(){
 		WNDCLASSEX wc;
 		wc.cbSize = sizeof(WNDCLASSEX);
 		wc.style = CS_HREDRAW | CS_VREDRAW;
-		wc.lpfnWndProc = this->WndProc;
+		wc.lpfnWndProc =this->WndProc;
 		wc.cbClsExtra = NULL;
 		wc.cbWndExtra = NULL;
 		wc.hInstance = this->hInstance;
@@ -51,7 +53,6 @@ private:
 	}
 
 public:
-	bool ifAnyWindowClosed;
 	WindowCreator::WindowCreator(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd){
 		WndClassName = L"WindowClass";
 		this->hInstance = hInstance;
@@ -62,7 +63,6 @@ public:
 		this->hardDevice = new DxInitializer();
 		this->softDevice = new DxInitializer();
 		this->framesCount = 100;
-		this->ifAnyWindowClosed = false;
 	};
 	WindowCreator::WindowCreator(){
 
@@ -82,7 +82,7 @@ public:
 			return;
 		}
 
-		this->hardTimer = new Timer(hwnd, this->framesCount);
+		this->hardTimer = new Timer(hwnd, this->framesCount,this->hardFileName);
 		ShowWindow(hwnd, true);
 		hardDevice->InitializeDirect3d11App(hwnd, D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_HARDWARE);
 		UpdateWindow(hwnd);
@@ -102,7 +102,7 @@ public:
 				L"Error", MB_OK | MB_ICONERROR);
 			return;
 		}
-		this->softTimer = new Timer(hwnd, this->framesCount);
+		this->softTimer = new Timer(hwnd, this->framesCount,this->softFileName);
 		ShowWindow(hwnd, true);
 		softDevice->InitializeDirect3d11App(hwnd, D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_WARP);
 		UpdateWindow(hwnd);
@@ -111,6 +111,7 @@ public:
 	void WindowCreator::chceckEventMessages(int whichRefresh){
 		MSG msg;
 		while (true){
+			//check if any message exists
 			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 			{
 				TranslateMessage(&msg);
@@ -118,7 +119,7 @@ public:
 				if (msg.message == WM_QUIT){
 					hardDevice->ReleaseObjects();
 					softDevice->ReleaseObjects();
-					this->ifAnyWindowClosed = true;
+					ExitProcess(0);
 					return;
 				}
 			}

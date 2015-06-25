@@ -24,8 +24,5 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	WindowCreator* windowCreator = new WindowCreator(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 	std::thread t1(thread1, windowCreator);
 	std::thread t2(thread2, windowCreator);
-	while (1){
-		if (windowCreator->ifAnyWindowClosed)
-			ExitProcess(0);
-	}
+	while (1);
 }

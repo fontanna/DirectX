@@ -1,10 +1,9 @@
 1.Problem z utworzeniem urz¹dzenia dx dla renderowania softwearowego.
 rozwi¹zanie: utworzenie urz¹dzenia WARP, jest to specjalny wbudowany typ urz¹dzenia do renderowania softwearowego.
-2.Problem z utworzeniem urz¹dzenia D3d, spowodowany z³ym utworzeniem DXGI_SWAP_CHAIN_DESC
-3.Problem z funkcjami biblioteki DirectXMath(b³êdy dostêpu) np przy uzyciu funkcji XMVectorSet.
+2.Problem z funkcjami biblioteki DirectXMath(b³êdy dostêpu) np przy uzyciu funkcji XMVectorSet.
 Rozwi¹zanie znalaz³em na  http://stackoverflow.com/questions/22437516/access-violation-and-strange-behavior-of-visual-studio
-4. Problem z directx11 brak metody podobnej do glFinish w opengl.
+3. Problem z directx11 brak metody podobnej do glFinish w opengl.
 Niestety nie ma takiej funkcji w directx, u¿y³em za to DirectX query którego stan mogê sprawdziæ dziêki czemu, mogê poczekaæ,
 a¿ skoñczy siê rysowanie.
-5. Problem z utworzeniem nowego w¹tku u¿ywajac biblioteki thread.
+4. Problem z utworzeniem nowego w¹tku u¿ywajac biblioteki thread.
 Ta bliblioteka jest dostêpna dopiero od C++ w ver 11. przez co musia³em u¿ywaæ innego kompilatora.

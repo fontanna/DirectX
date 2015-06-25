@@ -1,7 +1,7 @@
-﻿Build started 2015-06-09 14:50:16.
-     1>Project "C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\DirectTest\DirectTest.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 2015-06-25 12:36:36.
+     1>Project "C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\DirectTest\DirectTest.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DxInitializer.cpp Source.cpp Timer.cpp WindowCreator.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DxInitializer.cpp Source.cpp WindowCreator.cpp
          WindowCreator.cpp
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED' : macro redefinition
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50092) : see previous definition of 'DXGI_STATUS_OCCLUDED'
@@ -59,12 +59,11 @@
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50445) : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND' : macro redefinition
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50454) : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(262): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(263): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(264): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(265): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
      1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(316): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\windowcreator.cpp(62): warning C4316: 'DxInitializer' : object allocated on the heap may not be aligned 16
      1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\windowcreator.cpp(63): warning C4316: 'DxInitializer' : object allocated on the heap may not be aligned 16
-         Timer.cpp
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\windowcreator.cpp(64): warning C4316: 'DxInitializer' : object allocated on the heap may not be aligned 16
          Source.cpp
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED' : macro redefinition
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50092) : see previous definition of 'DXGI_STATUS_OCCLUDED'
@@ -122,8 +121,8 @@
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50445) : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND' : macro redefinition
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50454) : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(262): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(263): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(264): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(265): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
      1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(316): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
          DxInitializer.cpp
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED' : macro redefinition
@@ -182,18 +181,19 @@
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50445) : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND' : macro redefinition
                  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50454) : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(262): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
-     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(263): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(264): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(265): warning C4244: '=' : conversion from 'int' to 'FLOAT', possible loss of data
      1>c:\users\damian\documents\visual studio 2013\projects\directtest\directtest\dxinitializer.cpp(316): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\Debug\DirectTest.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\Debug\DirectTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\Debug\DirectTest.lib" /MACHINE:X86 Debug\DxInitializer.obj
          Debug\Source.obj
+         Debug\TimeLogger.obj
          Debug\Timer.obj
          Debug\WindowCreator.obj
          DirectTest.vcxproj -> C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\Debug\DirectTest.exe
-     1>Done Building Project "C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\DirectTest\DirectTest.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Users\Damian\documents\visual studio 2013\Projects\DirectTest\DirectTest\DirectTest.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.12
+Time Elapsed 00:00:04.04

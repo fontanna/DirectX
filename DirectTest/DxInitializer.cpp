@@ -11,9 +11,9 @@
 class DxInitializer{
 private:
 
-	IDXGISwapChain* SwapChain;
+	IDXGISwapChain* swapChain;
 	ID3D11Device* d3d11Device;
-	ID3D11DeviceContext* d3d11DevCon;
+	ID3D11DeviceContext* deviceContext;
 	ID3D11RenderTargetView* renderTargetView;
 	ID3D11Buffer* triangleVertBuffer;
 	ID3D11VertexShader* VS;
@@ -22,13 +22,13 @@ private:
 	ID3D10Blob* PS_Buffer;
 	ID3D11InputLayout* vertLayout;
 	ID3D11Buffer* squareIndexBuffer;
-	ID3D11Buffer* squareVertBuffer;
 	ID3D11DepthStencilView* depthStencilView;
 	ID3D11Texture2D* depthStencilBuffer;
 	ID3D11Buffer* cbPerObjectBuffer;
 
 	XMMATRIX cube1World;
 	XMMATRIX cubes[1000];
+	int cubesCount;
 	XMMATRIX Rotation;
 	XMMATRIX Scale;
 	XMMATRIX Translation;
@@ -69,6 +69,7 @@ private:
 public:
 
 	DxInitializer::DxInitializer(){
+		cubesCount = 1000;
 		Width = 600;
 		Height = 600;
 		rot = 0.01f;
@@ -77,7 +78,7 @@ public:
 	{
 		HRESULT hr;
 
-		//Describe our SwapChain
+		//Describe our swapChain
 		DXGI_SWAP_CHAIN_DESC swapChainDesc;
 
 		ZeroMemory(&swapChainDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
@@ -92,13 +93,13 @@ public:
 		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 
-		//Create our SwapChain
+		//Create our swapChain
 		hr = D3D11CreateDeviceAndSwapChain(NULL, driverType, NULL, NULL, NULL, NULL,
-			D3D11_SDK_VERSION, &swapChainDesc, &SwapChain, &d3d11Device, NULL, &d3d11DevCon);
+			D3D11_SDK_VERSION, &swapChainDesc, &swapChain, &d3d11Device, NULL, &deviceContext);
 
 		//Create our BackBuffer
 		ID3D11Texture2D* BackBuffer;
-		hr = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
+		hr = swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
 
 		//Create our Render Target
 		hr = d3d11Device->CreateRenderTargetView(BackBuffer, NULL, &renderTargetView);
@@ -124,7 +125,7 @@ public:
 		d3d11Device->CreateDepthStencilView(depthStencilBuffer, NULL, &depthStencilView);
 
 		//Set our Render Target
-		d3d11DevCon->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
+		deviceContext->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 		this->InitScene();
 
 		return true;
@@ -132,9 +133,9 @@ public:
 
 	void ReleaseObjects(){
 		//Release the COM Objects we created
-		SwapChain->Release();
+		swapChain->Release();
 		d3d11Device->Release();
-		d3d11DevCon->Release();
+		deviceContext->Release();
 		triangleVertBuffer->Release();
 		squareIndexBuffer->Release();
 		VS->Release();
@@ -154,6 +155,7 @@ public:
 		};
 		UINT numElements = ARRAYSIZE(layout);
 		HRESULT hr;
+
 		//Compile Shaders from shader file
 		hr = D3DX11CompileFromFile(L"Effects.fx", 0, 0, "VS", "vs_4_0", 0, 0, 0, &VS_Buffer, 0, 0);
 		hr = D3DX11CompileFromFile(L"Effects.fx", 0, 0, "PS", "ps_4_0", 0, 0, 0, &PS_Buffer, 0, 0);
@@ -163,12 +165,12 @@ public:
 		hr = d3d11Device->CreatePixelShader(PS_Buffer->GetBufferPointer(), PS_Buffer->GetBufferSize(), NULL, &PS);
 
 		//Set Vertex and Pixel Shaders
-		d3d11DevCon->VSSetShader(VS, 0, 0);
-		d3d11DevCon->PSSetShader(PS, 0, 0);
+		deviceContext->VSSetShader(VS, 0, 0);
+		deviceContext->PSSetShader(PS, 0, 0);
 
 		//Create the vertex buffer
 		//Create the vertex buffer
-		Vertex v[] =
+		Vertex verticies[] =
 		{
 			Vertex(-1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
 			Vertex(-1.0f, +1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
@@ -221,7 +223,7 @@ public:
 		iinitData.pSysMem = indices;
 		d3d11Device->CreateBuffer(&indexBufferDesc, &iinitData, &squareIndexBuffer);
 
-		d3d11DevCon->IASetIndexBuffer(squareIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+		deviceContext->IASetIndexBuffer(squareIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 		D3D11_BUFFER_DESC vertexBufferDesc;
 		ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
@@ -235,23 +237,23 @@ public:
 		D3D11_SUBRESOURCE_DATA vertexBufferData;
 
 		ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-		vertexBufferData.pSysMem = v;
+		vertexBufferData.pSysMem = verticies;
 		hr = d3d11Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &triangleVertBuffer);
 
 		//Set the vertex buffer
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
-		d3d11DevCon->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
+		deviceContext->IASetVertexBuffers(0, 1, &triangleVertBuffer, &stride, &offset);
 
 		//Create the Input Layout
 		d3d11Device->CreateInputLayout(layout, numElements, VS_Buffer->GetBufferPointer(),
 			VS_Buffer->GetBufferSize(), &vertLayout);
 
 		//Set the Input Layout
-		d3d11DevCon->IASetInputLayout(vertLayout);
+		deviceContext->IASetInputLayout(vertLayout);
 
 		//Set Primitive Topology
-		d3d11DevCon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//Create the Viewport
 		D3D11_VIEWPORT viewport;
@@ -263,7 +265,7 @@ public:
 		viewport.Height = Height;
 
 		//Set the Viewport
-		d3d11DevCon->RSSetViewports(1, &viewport);
+		deviceContext->RSSetViewports(1, &viewport);
 
 		//Create the buffer to send to the cbuffer in effect file
 		D3D11_BUFFER_DESC cbbd;
@@ -306,15 +308,13 @@ public:
 		//Set cube1's world space using the transformations
 		cube1World = Translation * Rotation;
 
-		for (int i = 0; i<1000; i++){
-			//Reset cube2World
+		for (int i = 0; i<cubesCount; i++){
+			//Reset cube[i] world
 			cubes[i] = XMMatrixIdentity();
-
-			//Define cube2's world space matrix
 			Rotation = XMMatrixRotationAxis(rotaxis, -rot);
 			Scale = XMMatrixScaling(0.5f, 0.5f, 0.5f);
 			Translation = XMMatrixTranslation(-2+((i %100)% 10) * 2, ((-i%100) / 10) * 2 + 10, 5-(i/100)*2);
-			//Set cube2's world space matrix
+			//Set cube[i]'s world space matrix
 			cubes[i] = Rotation * Scale * Translation;
 		}
 	}
@@ -322,35 +322,33 @@ public:
 		ID3D11Query *frameDisjoint;
 		D3D11_QUERY_DESC queryDesc = { D3D11_QUERY_TIMESTAMP_DISJOINT, 0 };
 		d3d11Device->CreateQuery(&queryDesc, &frameDisjoint);
-		d3d11DevCon->Begin(frameDisjoint);
+		deviceContext->Begin(frameDisjoint);
 
 		float bgColor[4] = { (0.0f, 0.0f, 0.0f, 0.0f) };
-		d3d11DevCon->ClearRenderTargetView(renderTargetView, bgColor);
-		d3d11DevCon->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		deviceContext->ClearRenderTargetView(renderTargetView, bgColor);
+		deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 		//Set the WVP matrix and send it to the constant buffer in effect file
 		WVP = cube1World * camView * camProjection;
 		cbPerObj.WVP = XMMatrixTranspose(WVP);
-		d3d11DevCon->UpdateSubresource(cbPerObjectBuffer, 0, NULL, &cbPerObj, 0, 0);
-		d3d11DevCon->VSSetConstantBuffers(0, 1, &cbPerObjectBuffer);
+		deviceContext->UpdateSubresource(cbPerObjectBuffer, 0, NULL, &cbPerObj, 0, 0);
+		deviceContext->VSSetConstantBuffers(0, 1, &cbPerObjectBuffer);
 
 		//Draw the first cube
-		d3d11DevCon->DrawIndexed(36, 0, 0);
+		deviceContext->DrawIndexed(36, 0, 0);
 
-		for (int i = 0; i<1000; i++){
+		for (int i = 0; i<cubesCount; i++){
 			WVP = cubes[i] * camView * camProjection;
 			cbPerObj.WVP = XMMatrixTranspose(WVP);
-			d3d11DevCon->UpdateSubresource(cbPerObjectBuffer, 0, NULL, &cbPerObj, 0, 0);
-			d3d11DevCon->VSSetConstantBuffers(0, 1, &cbPerObjectBuffer);
-			//Draw the cube
-			d3d11DevCon->DrawIndexed(36, 0, 0);
+			deviceContext->UpdateSubresource(cbPerObjectBuffer, 0, NULL, &cbPerObj, 0, 0);
+			deviceContext->VSSetConstantBuffers(0, 1, &cbPerObjectBuffer);
+			//Draw the i cube
+			deviceContext->DrawIndexed(36, 0, 0);
 		}
 
-		SwapChain->Present(0, 0);
-		d3d11DevCon->End(frameDisjoint);
-		while (d3d11DevCon->GetData(frameDisjoint, NULL, 0, 0) != S_OK);
+		swapChain->Present(0, 0);
+		deviceContext->End(frameDisjoint);
+		while (deviceContext->GetData(frameDisjoint, NULL, 0, 0) != S_OK);
 	}
-	void flushCommands(){
-		this->d3d11DevCon->Flush();
-	}
+
 };
